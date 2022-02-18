@@ -1,6 +1,8 @@
 const express= require('express');
 const mysql= require('mysql');
 const bodyparser= require('body-parser');
+const jwt = require("jsonwebtoken");
+const JWT_Secret = 'claveSecreta';
 const Connection = require('mysql/lib/Connection');
 const port = process.env.port || 3050;
 const app= express();
@@ -73,21 +75,24 @@ app.post('/registrar', (req, res)=>{
 //Validar Usuario
 app.post('/login',  (req, res) => {
     const {nombreUsuario, contrasena}= req.body;
-    const sql = `SELECT * FROM usuarios WHERE nombreUsuario = '${nombreUsuario}' AND contrasena= '${contrasena}'`;
-    conexion.query(sql, (error, result) => {
 
-        if(result.length > 0){
-            const mjs= "";
-            
-           res.send(true);
-           
-            
-        } else{
-            res.send(false);
-            
-        }
         
-    })
+            const sql = `SELECT * FROM usuarios WHERE nombreUsuario = '${nombreUsuario}' AND contrasena= '${contrasena}'`;
+            conexion.query(sql, (error, result) => {
+        
+                if(result.length > 0){
+    
+                    
+                   res.send(true);
+                   
+                    
+                } else{
+                    res.send(false);
+                    
+                }
+                
+            })
+    
     
   });
 
